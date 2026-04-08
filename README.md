@@ -14,7 +14,7 @@ Source code:
 
 Deployed on Vercel:
 
-- https://the-paper-almanac-7y6pohgqe-priyuu490-gmailcoms-projects.vercel.app/
+- https://the-paper-almanac.vercel.app/
 
 ## Features
 

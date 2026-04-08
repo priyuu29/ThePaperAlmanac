@@ -3,9 +3,9 @@
 :root {
   --background: #edf2f7;
   --foreground: #132238;
-  --paper: #fffdf8;
+  --paper: #f6efe4;
   --paper-shadow: rgba(15, 23, 42, 0.18);
-  --line: rgba(15, 23, 42, 0.12);
+  --line: rgba(83, 68, 47, 0.18);
   --accent: #1ea5f0;
   --accent-deep: #1078bd;
   --accent-soft: #d9f0fe;
@@ -24,8 +24,8 @@
 
 html {
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), transparent 28%),
-    linear-gradient(180deg, #ece7df 0%, #ddd6cb 100%);
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 28%),
+    linear-gradient(180deg, #d9d1c5 0%, #c8beb0 100%);
 }
 
 body {
@@ -48,19 +48,19 @@ textarea {
 
 .paper-card {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 18%),
-    linear-gradient(180deg, #fffef9 0%, #fffaf2 100%);
-  border: 1px solid rgba(202, 190, 173, 0.6);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 18%),
+    linear-gradient(180deg, #f8f0e5 0%, #f2e8da 100%);
+  border: 1px solid rgba(171, 151, 123, 0.62);
   box-shadow:
-    0 2rem 3.8rem rgba(61, 52, 40, 0.2),
-    0 0.9rem 1.4rem rgba(255, 255, 255, 0.58) inset,
-    0 -0.35rem 0.8rem rgba(90, 74, 54, 0.05) inset;
+    0 2rem 3.8rem rgba(61, 52, 40, 0.24),
+    0 0.9rem 1.4rem rgba(255, 255, 255, 0.28) inset,
+    0 -0.35rem 0.8rem rgba(90, 74, 54, 0.08) inset;
 }
 
 .paper-grain {
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(94, 74, 45, 0.04) 0.7px, transparent 0),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
+    radial-gradient(circle at 1px 1px, rgba(94, 74, 45, 0.055) 0.7px, transparent 0),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent);
   background-size: 13px 13px, auto;
 }
 
@@ -82,9 +82,9 @@ textarea {
 
 .calendar-stack-shadow {
   box-shadow:
-    0 1.8rem 3rem rgba(82, 69, 52, 0.16),
-    0 0.3rem 0 rgba(255, 253, 248, 1),
-    0 0.7rem 0 rgba(236, 228, 216, 0.8);
+    0 1.8rem 3rem rgba(82, 69, 52, 0.2),
+    0 0.3rem 0 rgba(248, 240, 229, 1),
+    0 0.7rem 0 rgba(219, 208, 191, 0.9);
 }
 
 .hanging-lift {
@@ -117,7 +117,7 @@ textarea {
 }
 
 .calendar-rule {
-  border-color: rgba(94, 74, 45, 0.12);
+  border-color: rgba(94, 74, 45, 0.18);
 }
 
 @media (max-width: 768px) {

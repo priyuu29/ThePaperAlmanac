@@ -22,6 +22,7 @@ interface CalendarGridProps {
   notes: CalendarState['notes']
   onDateClick: (date: Date) => void
   onMonthChange: (direction: 'prev' | 'next') => void
+  onJumpToToday: () => void
 }
 
 export default function CalendarGrid({
@@ -30,6 +31,7 @@ export default function CalendarGrid({
   notes,
   onDateClick,
   onMonthChange,
+  onJumpToToday,
 }: CalendarGridProps) {
   const year = currentDate.getFullYear()
   const monthIndex = currentDate.getMonth()
@@ -41,6 +43,16 @@ export default function CalendarGrid({
   const hasNoteOnDate = (date: Date) => {
     const dateKey = toDateKey(date)
     return notes.some(
+      (note) =>
+        note.range &&
+        dateKey >= note.range.start &&
+        dateKey <= (note.range.end || note.range.start)
+    )
+  }
+
+  const getNotesForDate = (date: Date) => {
+    const dateKey = toDateKey(date)
+    return notes.filter(
       (note) =>
         note.range &&
         dateKey >= note.range.start &&
@@ -75,19 +87,26 @@ export default function CalendarGrid({
     : 'Choose a start day, then an end day'
 
   return (
-    <section className="rounded-b-[1.6rem] border border-[#e6ddd0] bg-[#fffdfa] px-4 py-4 md:px-5 md:py-5">
-      <div className="mb-4 flex flex-col gap-3 border-b border-[#e7dfd3] pb-4 md:flex-row md:items-center md:justify-between">
+    <section className="rounded-b-[1.6rem] border border-[#cdbca3] bg-[#f7efe2] px-4 py-4 md:px-5 md:py-5">
+      <div className="mb-4 flex flex-col gap-3 border-b border-[#d6c6ae] pb-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#8b95a2]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6e7781]">
             Calendar Page
           </p>
-          <h2 className="font-display text-[2.35rem] font-semibold text-[#1f2430] md:text-[3rem]">
+          <h2 className="font-display text-[2.35rem] font-semibold text-[#161b22] md:text-[3rem]">
             {months[monthIndex]} {year}
           </h2>
-          <p className="mt-1 text-sm text-[#616b76]">{selectionLabel}</p>
+          <p className="mt-1 text-sm text-[#4c5560]">{selectionLabel}</p>
         </div>
 
         <div className="flex items-center gap-2 self-start md:self-auto">
+          <Button
+            variant="outline"
+            onClick={onJumpToToday}
+          >
+            Today
+          </Button>
+
           <Button
             variant="outline"
             size="icon"
@@ -108,12 +127,12 @@ export default function CalendarGrid({
         </div>
       </div>
 
-      <div className="mb-0 grid grid-cols-7 border-y border-[#e7dfd3] text-center">
+      <div className="mb-0 grid grid-cols-7 border-y border-[#d6c6ae] text-center">
         {weekdayLabels.map((day, idx) => (
           <div
             key={day}
             className={cn(
-              'border-r border-[#ede4d8] py-2.5 text-[11px] font-semibold tracking-[0.2em] text-[#6f7680] last:border-r-0 md:text-xs',
+              'border-r border-[#dbcdb8] py-2.5 text-[11px] font-semibold tracking-[0.2em] text-[#616872] last:border-r-0 md:text-xs',
               idx >= 5 && 'text-[#4e97c5]'
             )}
           >
@@ -128,7 +147,7 @@ export default function CalendarGrid({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="grid grid-cols-7 border-b border-l border-[#e7dfd3]"
+          className="grid grid-cols-7 border-b border-l border-[#d6c6ae]"
         >
           {days.map(({ date, isCurrentMonth }) => {
             const dateKey = toDateKey(date)
@@ -137,12 +156,9 @@ export default function CalendarGrid({
             const end = isSelectionEnd(date)
             const selected = isSelected(date)
             const preview = isPreview(date)
-            const noteCount = notes.filter(
-              (note) =>
-                note.range &&
-                dateKey >= note.range.start &&
-                dateKey <= (note.range.end || note.range.start)
-            ).length
+            const dayNotes = getNotesForDate(date)
+            const noteCount = dayNotes.length
+            const isHovered = hoveredDate ? sameDay(date, hoveredDate) : false
 
             return (
               <motion.button
@@ -151,9 +167,9 @@ export default function CalendarGrid({
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className={cn(
-                  'relative min-h-[60px] border-r border-t border-[#e7dfd3] px-2 py-2.5 text-left transition-colors md:min-h-[72px] md:px-2.5 md:py-3',
-                  isCurrentMonth ? 'bg-[#fffdfa] text-[#20242b]' : 'bg-[#fbf8f2] text-[#b5b0a7]',
-                  isToday && 'bg-[#f3f8fc]',
+                  'relative min-h-[60px] border-r border-t border-[#d6c6ae] px-2 py-2.5 text-left transition-colors md:min-h-[72px] md:px-2.5 md:py-3',
+                  isCurrentMonth ? 'bg-[#f7efe2] text-[#1e232b]' : 'bg-[#efe4d3] text-[#988f81]',
+                  isToday && 'bg-[#dde9f3]',
                   selected && 'range-bar',
                   (start || end) && 'bg-[#4da0d1] text-white',
                   preview && !selected && 'bg-[#edf6fb]'
@@ -174,7 +190,7 @@ export default function CalendarGrid({
                     <span
                       className={cn(
                         'inline-flex h-2 w-2 rounded-full',
-                        start || end ? 'bg-white' : 'bg-sky-600'
+                      start || end ? 'bg-white' : 'bg-[#3d89ba]'
                       )}
                     />
                   ) : (
@@ -185,11 +201,33 @@ export default function CalendarGrid({
                   <span
                     className={cn(
                       'absolute right-2 top-2 rounded-full px-1.5 py-0.5 text-[10px] font-semibold',
-                      start || end ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600'
+                      start || end ? 'bg-white/20 text-white' : 'bg-[#ded1bf] text-[#505861]'
                     )}
                   >
                     {noteCount}
                   </span>
+                ) : null}
+                {isHovered && dayNotes.length > 0 ? (
+                  <div className="pointer-events-none absolute bottom-[calc(100%-0.35rem)] left-1/2 z-20 w-48 -translate-x-1/2 rounded-[0.9rem] border border-[#cbb79d] bg-[#f6ecde] p-3 text-left shadow-[0_0.75rem_1.8rem_rgba(80,62,39,0.22)]">
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6f7782]">
+                      Notes
+                    </p>
+                    <div className="space-y-1.5">
+                      {dayNotes.slice(0, 2).map((note) => (
+                        <p
+                          key={note.id}
+                          className="line-clamp-3 text-xs leading-5 text-[#38424d]"
+                        >
+                          {note.content}
+                        </p>
+                      ))}
+                      {dayNotes.length > 2 ? (
+                        <p className="text-[11px] uppercase tracking-[0.14em] text-[#6f7782]">
+                          +{dayNotes.length - 2} more
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
                 ) : null}
               </motion.button>
             )
@@ -197,7 +235,7 @@ export default function CalendarGrid({
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.16em] text-[#7b848f]">
+      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.16em] text-[#5f6974]">
         <div className="flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[#4da0d1]" />
           Start and end

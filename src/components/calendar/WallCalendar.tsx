@@ -132,6 +132,18 @@ export default function WallCalendar() {
     })
   }
 
+  const handleJumpToToday = () => {
+    const today = clampToStartOfDay(new Date())
+
+    setState((prev) => ({
+      ...prev,
+      currentDate: today,
+      selectedRange: {
+        start: today,
+      },
+    }))
+  }
+
   const handleAddNote = (content: string) => {
     setState((prev) => {
       const range = prev.selectedRange
@@ -214,13 +226,13 @@ export default function WallCalendar() {
       >
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className={paperMode ? 'text-xs font-semibold uppercase tracking-[0.34em] text-[#7f8a99]' : 'text-xs font-semibold uppercase tracking-[0.34em] text-[#8b929d]'}>
+            <p className={paperMode ? 'text-xs font-semibold uppercase tracking-[0.34em] text-[#65707d]' : 'text-xs font-semibold uppercase tracking-[0.34em] text-[#8b929d]'}>
               SWE Intern Assessment
             </p>
-            <h1 className={paperMode ? 'font-display text-5xl font-semibold text-[#22262d] md:text-7xl' : 'font-display text-5xl font-semibold text-[#f2ede5] md:text-7xl'}>
+            <h1 className={paperMode ? 'font-display text-5xl font-semibold text-[#13171d] md:text-7xl' : 'font-display text-5xl font-semibold text-[#f2ede5] md:text-7xl'}>
               The Paper Almanac
             </h1>
-            <p className={paperMode ? 'mt-1 text-sm uppercase tracking-[0.24em] text-[#99a2ac]' : 'mt-1 text-sm uppercase tracking-[0.24em] text-[#747c87]'}>
+            <p className={paperMode ? 'mt-1 text-sm uppercase tracking-[0.24em] text-[#747f8b]' : 'mt-1 text-sm uppercase tracking-[0.24em] text-[#747c87]'}>
               Quiet dates for the month ahead
             </p>
           </div>
@@ -267,6 +279,7 @@ export default function WallCalendar() {
                   notes={state.notes.filter((note) => note.monthKey === monthKey)}
                   onDateClick={handleDateClick}
                   onMonthChange={handleMonthChange}
+                  onJumpToToday={handleJumpToToday}
                 />
               </div>
 
@@ -290,10 +303,10 @@ export default function WallCalendar() {
               />
             </div>
 
-            <div className="calendar-rule mt-6 flex flex-col gap-3 rounded-[1.1rem] border bg-[#fffdf8] px-4 py-4 md:flex-row md:items-center md:justify-between">
+            <div className="calendar-rule mt-6 flex flex-col gap-3 rounded-[1.1rem] border bg-[#f7efe2] px-4 py-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#8893a0]">Selected dates</p>
-                <p className="mt-1 text-sm text-[#515b68]">{selectionLabel}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6f7883]">Selected dates</p>
+                <p className="mt-1 text-sm text-[#39434d]">{selectionLabel}</p>
               </div>
             </div>
           </div>
