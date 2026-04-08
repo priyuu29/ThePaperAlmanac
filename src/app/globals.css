@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+:root {
+  --background: #edf2f7;
+  --foreground: #132238;
+  --paper: #fffdf8;
+  --paper-shadow: rgba(15, 23, 42, 0.18);
+  --line: rgba(15, 23, 42, 0.12);
+  --accent: #1ea5f0;
+  --accent-deep: #1078bd;
+  --accent-soft: #d9f0fe;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), transparent 28%),
+    linear-gradient(180deg, #ece7df 0%, #ddd6cb 100%);
+}
+
+body {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  background: transparent;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.calendar-shell {
+  position: relative;
+  perspective: 1800px;
+}
+
+.paper-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 18%),
+    linear-gradient(180deg, #fffef9 0%, #fffaf2 100%);
+  border: 1px solid rgba(202, 190, 173, 0.6);
+  box-shadow:
+    0 2rem 3.8rem rgba(61, 52, 40, 0.2),
+    0 0.9rem 1.4rem rgba(255, 255, 255, 0.58) inset,
+    0 -0.35rem 0.8rem rgba(90, 74, 54, 0.05) inset;
+}
+
+.paper-grain {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(94, 74, 45, 0.04) 0.7px, transparent 0),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
+  background-size: 13px 13px, auto;
+}
+
+.spiral-binding {
+  background-image: radial-gradient(circle, rgba(42, 45, 53, 0.92) 0.13rem, transparent 0.14rem);
+  background-size: 1rem 0.65rem;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.notes-rule {
+  background-image: linear-gradient(to bottom, transparent 0, transparent 1.65rem, var(--line) 1.65rem, var(--line) 1.72rem);
+  background-size: 100% 1.72rem;
+}
+
+.range-bar {
+  background: linear-gradient(90deg, rgba(81, 169, 224, 0.12), rgba(81, 169, 224, 0.2));
+}
+
+.calendar-stack-shadow {
+  box-shadow:
+    0 1.8rem 3rem rgba(82, 69, 52, 0.16),
+    0 0.3rem 0 rgba(255, 253, 248, 1),
+    0 0.7rem 0 rgba(236, 228, 216, 0.8);
+}
+
+.hanging-lift {
+  position: relative;
+  transform: rotateX(3.25deg) rotateZ(-0.4deg);
+  transform-origin: center top;
+}
+
+.hanging-lift::before {
+  content: "";
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: -2.4rem;
+  height: 3.8rem;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, rgba(67, 56, 41, 0.26) 0%, rgba(67, 56, 41, 0.09) 45%, transparent 78%);
+  filter: blur(12px);
+  z-index: -2;
+}
+
+.hanging-lift::after {
+  content: "";
+  position: absolute;
+  inset: auto 1.1rem -0.9rem 1.1rem;
+  height: 1.2rem;
+  border-radius: 0 0 2rem 2rem;
+  background: linear-gradient(180deg, rgba(233, 225, 213, 0.95), rgba(214, 204, 191, 0.8));
+  z-index: -1;
+}
+
+.calendar-rule {
+  border-color: rgba(94, 74, 45, 0.12);
+}
+
+@media (max-width: 768px) {
+  .calendar-shell {
+    perspective: none;
+  }
+
+  .hanging-lift {
+    transform: none;
+  }
+
+  .hanging-lift::before {
+    left: 8%;
+    right: 8%;
+    bottom: -1.5rem;
+    height: 2.6rem;
+  }
+
+  .hanging-lift::after {
+    inset: auto 0.75rem -0.55rem 0.75rem;
+    height: 0.7rem;
+  }
+}
