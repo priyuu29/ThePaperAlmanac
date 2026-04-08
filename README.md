@@ -16,6 +16,12 @@ Deployed on Vercel:
 
 - https://the-paper-almanac.vercel.app/
 
+## Demo Video
+
+Walkthrough video:
+
+- https://drive.google.com/file/d/1kb-csZ2qzc1bSiUMaWgh-zlKBbDfEc3r/view?usp=sharing
+
 ## Features
 
 - Physical wall-calendar inspired layout with a hanging paper feel
