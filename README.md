@@ -10,7 +10,12 @@ Recommended additions before submission:
 
 - GitHub repository link
 - Short Loom or screen-recorded walkthrough
-- Optional Vercel deployment link
+
+## Live Demo
+
+Deployed on Vercel:
+
+- https://the-paper-almanac-7y6pohgqe-priyuu490-gmailcoms-projects.vercel.app/
 
 ## Features
 
