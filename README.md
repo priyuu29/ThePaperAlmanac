@@ -6,10 +6,9 @@ This project reimagines a traditional hanging wall calendar as an interactive we
 
 ## Preview
 
-Recommended additions before submission:
+Source code:
 
-- GitHub repository link
-- Short Loom or screen-recorded walkthrough
+- https://github.com/priyuu29/ThePaperAlmanac
 
 ## Live Demo
 
