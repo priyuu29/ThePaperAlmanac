@@ -106,7 +106,7 @@ export default function CalendarGrid({
       filter: 'blur(0px)',
       transition: {
         duration: 0.52,
-        ease: [0.2, 0.9, 0.2, 1],
+        ease: [0.2, 0.9, 0.2, 1] as const,
       },
     },
     exit: (direction: 1 | -1) => ({
@@ -118,7 +118,7 @@ export default function CalendarGrid({
       filter: 'blur(4px)',
       transition: {
         duration: 0.32,
-        ease: [0.4, 0, 1, 1],
+        ease: [0.4, 0, 1, 1] as const,
       },
     }),
   }
@@ -280,7 +280,7 @@ export default function CalendarGrid({
           key={`page-gloss-${year}-${monthIndex}`}
           initial={{ opacity: 0.28, x: monthDirection > 0 ? '-20%' : '20%' }}
           animate={{ opacity: 0, x: monthDirection > 0 ? '115%' : '-115%' }}
-          transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+          transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] as const }}
           className="pointer-events-none absolute inset-y-0 top-0 w-20 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.48)_50%,transparent_100%)]"
         />
       </div>
