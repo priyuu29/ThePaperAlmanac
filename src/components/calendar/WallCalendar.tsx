@@ -221,7 +221,7 @@ export default function WallCalendar() {
   }
 
   return (
-    <main className={paperMode ? 'min-h-screen px-4 py-10 md:px-6 md:py-14' : 'min-h-screen bg-[#1a1d22] px-4 py-10 md:px-6 md:py-14'}>
+    <main className={paperMode ? 'wall-room min-h-screen px-4 py-10 md:px-6 md:py-14' : 'min-h-screen bg-[#1a1d22] px-4 py-10 md:px-6 md:py-14'}>
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
@@ -264,7 +264,10 @@ export default function WallCalendar() {
           </div>
         </div>
 
-        <section className="calendar-shell mx-auto max-w-[72rem] pt-6 md:pt-10">
+        <section className="calendar-shell wall-stage mx-auto max-w-[76rem] pt-6 md:pt-10">
+          <div className="calendar-hanger" aria-hidden="true">
+            <div className="calendar-hanger__string" />
+          </div>
           <div className={paperMode ? 'paper-card calendar-stack-shadow hanging-lift overflow-hidden rounded-[2.5rem] px-4 py-4 paper-grain md:px-6 md:py-6' : 'hanging-lift overflow-hidden rounded-[2.5rem] border border-[#333943] bg-[#24282f] px-4 py-4 shadow-[0_2rem_3.8rem_rgba(0,0,0,0.35)] md:px-6 md:py-6'}>
             <div className="grid gap-0 lg:grid-cols-[minmax(0,1.28fr)_320px] lg:items-stretch">
               <div className="flex flex-col">
