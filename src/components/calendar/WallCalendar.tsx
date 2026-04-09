@@ -54,6 +54,7 @@ function hydrateState(saved: StoredCalendarState): CalendarState {
 }
 
 export default function WallCalendar() {
+  const [monthDirection, setMonthDirection] = useState<1 | -1>(1)
   const [state, setState] = useState<CalendarState>(() => {
     const saved =
       typeof window === 'undefined' ? null : storage<StoredCalendarState>(STORAGE_KEY)
@@ -119,6 +120,7 @@ export default function WallCalendar() {
   }
 
   const handleMonthChange = (direction: 'prev' | 'next') => {
+    setMonthDirection(direction === 'next' ? 1 : -1)
     setState((prev) => {
       const nextDate = new Date(prev.currentDate)
       nextDate.setMonth(nextDate.getMonth() + (direction === 'next' ? 1 : -1))
@@ -134,6 +136,7 @@ export default function WallCalendar() {
 
   const handleJumpToToday = () => {
     const today = clampToStartOfDay(new Date())
+    setMonthDirection(today.getTime() >= state.currentDate.getTime() ? 1 : -1)
 
     setState((prev) => ({
       ...prev,
@@ -275,6 +278,7 @@ export default function WallCalendar() {
 
                 <CalendarGrid
                   currentDate={state.currentDate}
+                  monthDirection={monthDirection}
                   selectedRange={state.selectedRange}
                   notes={state.notes.filter((note) => note.monthKey === monthKey)}
                   onDateClick={handleDateClick}

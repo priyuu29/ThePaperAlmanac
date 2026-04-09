@@ -120,6 +120,16 @@ textarea {
   border-color: rgba(94, 74, 45, 0.18);
 }
 
+.calendar-page-stage {
+  perspective: 1600px;
+  perspective-origin: center top;
+}
+
+.calendar-page-stage > *[data-page] {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
 @media (max-width: 768px) {
   .calendar-shell {
     perspective: none;
@@ -139,5 +149,9 @@ textarea {
   .hanging-lift::after {
     inset: auto 0.75rem -0.55rem 0.75rem;
     height: 0.7rem;
+  }
+
+  .calendar-page-stage {
+    perspective: 1100px;
   }
 }

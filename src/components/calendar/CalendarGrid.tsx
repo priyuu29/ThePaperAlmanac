@@ -18,6 +18,7 @@ import type { CalendarState } from '@/types/calendar'
 
 interface CalendarGridProps {
   currentDate: Date
+  monthDirection: 1 | -1
   selectedRange: CalendarState['selectedRange']
   notes: CalendarState['notes']
   onDateClick: (date: Date) => void
@@ -27,6 +28,7 @@ interface CalendarGridProps {
 
 export default function CalendarGrid({
   currentDate,
+  monthDirection,
   selectedRange,
   notes,
   onDateClick,
@@ -86,6 +88,41 @@ export default function CalendarGrid({
     ? formatRangeLabel(selectedRange.start, selectedRange.end)
     : 'Choose a start day, then an end day'
 
+  const monthMotionVariants = {
+    enter: (direction: 1 | -1) => ({
+      opacity: 0,
+      rotateX: direction > 0 ? -18 : 18,
+      rotateY: direction > 0 ? -7 : 7,
+      y: direction > 0 ? 28 : -28,
+      scale: 0.985,
+      filter: 'blur(5px)',
+    }),
+    center: {
+      opacity: 1,
+      rotateX: 0,
+      rotateY: 0,
+      y: 0,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.52,
+        ease: [0.2, 0.9, 0.2, 1],
+      },
+    },
+    exit: (direction: 1 | -1) => ({
+      opacity: 0,
+      rotateX: direction > 0 ? 14 : -14,
+      rotateY: direction > 0 ? 6 : -6,
+      y: direction > 0 ? -24 : 24,
+      scale: 0.992,
+      filter: 'blur(4px)',
+      transition: {
+        duration: 0.32,
+        ease: [0.4, 0, 1, 1],
+      },
+    }),
+  }
+
   return (
     <section className="rounded-b-[1.6rem] border border-[#cdbca3] bg-[#f7efe2] px-4 py-4 md:px-5 md:py-5">
       <div className="mb-4 flex flex-col gap-3 border-b border-[#d6c6ae] pb-4 md:flex-row md:items-center md:justify-between">
@@ -141,12 +178,17 @@ export default function CalendarGrid({
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
+      <div className="calendar-page-stage relative overflow-hidden">
+        <AnimatePresence mode="wait" custom={monthDirection}>
         <motion.div
           key={`${year}-${monthIndex}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
+          data-page="calendar-month"
+          custom={monthDirection}
+          variants={monthMotionVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          style={{ transformOrigin: monthDirection > 0 ? '50% 12%' : '50% 88%' }}
           className="grid grid-cols-7 border-b border-l border-[#d6c6ae]"
         >
           {days.map(({ date, isCurrentMonth }) => {
@@ -233,7 +275,15 @@ export default function CalendarGrid({
             )
           })}
         </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+        <motion.div
+          key={`page-gloss-${year}-${monthIndex}`}
+          initial={{ opacity: 0.28, x: monthDirection > 0 ? '-20%' : '20%' }}
+          animate={{ opacity: 0, x: monthDirection > 0 ? '115%' : '-115%' }}
+          transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+          className="pointer-events-none absolute inset-y-0 top-0 w-20 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.48)_50%,transparent_100%)]"
+        />
+      </div>
 
       <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.16em] text-[#5f6974]">
         <div className="flex items-center gap-2">
